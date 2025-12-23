@@ -3,6 +3,7 @@ import 'package:url_launcher/url_launcher.dart';
 import 'user_model.dart';
 import 'profile_screen.dart';
 import '../MoodTrackingModule/mood_tracker_screen.dart';
+import '../MoodTrackingModule/models/mood_model.dart';
 import '../ResourceModule/screens/resource_screen.dart';
 import '../ChatModule/screens/user_chat_screen.dart';
 import '../NotificationModule/screens/notifications_screen.dart';
@@ -26,6 +27,19 @@ class _HomePageState extends State<HomePage> {
   final SupabaseService _dbHelper = SupabaseService.instance;
   int _notificationCount = 0;
   ReminderModel? _nextReminder;
+  String? _selectedMoodEmoji; // Track selected mood emoji
+  
+  // Encouragement messages for each mood
+  final Map<String, String> _encouragementMessages = {
+    '😄': 'Your joy is contagious! Keep spreading that positive energy and remember to share your happiness with others.',
+    '🙂': 'You\'re doing great! Take a moment to appreciate the good things in your day, no matter how small.',
+    '😐': 'It\'s okay to feel neutral. Every day is different, and tomorrow brings new opportunities for growth.',
+    '😰': 'Feeling anxious is valid. Take deep breaths, you\'re stronger than you think. This feeling will pass.',
+    '😢': 'It\'s okay to feel sad. Your feelings are valid. Remember, you don\'t have to face this alone.',
+    '😠': 'Anger is a natural emotion. Take a moment to breathe and process. You have the strength to handle this.',
+  };
+
+  bool _isGuideExpanded = false;
 
   @override
   void initState() {
@@ -110,11 +124,11 @@ class _HomePageState extends State<HomePage> {
                     // Welcome Section
                     _buildWelcomeSection(),
                     const SizedBox(height: 16),
-                    // Reminders Section
-                    _buildRemindersSection(),
-                    const SizedBox(height: 16),
                     // Daily Tip Section
                     _buildDailyTipSection(),
+                    const SizedBox(height: 16),
+                    // Reminders Section
+                    _buildRemindersSection(),
                     const SizedBox(height: 16),
                     // Need Help Section
                     _buildNeedHelpSection(),
@@ -150,10 +164,6 @@ class _HomePageState extends State<HomePage> {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       child: Row(
         children: [
-          IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () {},
-          ),
           const Row(
             children: [
               Icon(Icons.eco, color: Colors.green, size: 24),
@@ -282,15 +292,59 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildMoodEmoji(String emoji, String label) {
+    final isSelected = _selectedMoodEmoji == emoji;
     return GestureDetector(
-      onTap: () {},
+      onTap: () async {
+        try {
+          // Create mood object
+          final mood = Mood(
+            emoji: emoji,
+            name: label,
+            timestamp: DateTime.now(),
+          );
+          
+          // Save to database
+          await _dbHelper.insertMood(mood);
+          
+          // Update selected mood
+          setState(() {
+            _selectedMoodEmoji = emoji;
+          });
+          
+          // Show feedback
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Mood recorded: $label'),
+                duration: const Duration(seconds: 2),
+                backgroundColor: Colors.green,
+              ),
+            );
+          }
+        } catch (e) {
+          print('Error saving mood: $e');
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Error saving mood: $e'),
+                duration: const Duration(seconds: 2),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        }
+      },
       child: Column(
         children: [
           Container(
             width: 50,
             height: 50,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
+              border: isSelected
+                  ? Border.all(color: const Color(0xFF2196F3), width: 3)
+                  : null,
+              color: isSelected ? const Color(0xFF2196F3).withOpacity(0.1) : null,
             ),
             child: Center(
               child: Text(emoji, style: const TextStyle(fontSize: 32)),
@@ -375,6 +429,8 @@ class _HomePageState extends State<HomePage> {
                     ).then((_) => _loadNextReminder());
                   },
                   style: OutlinedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: const Color(0xFF2196F3),
                     side: const BorderSide(color: Color(0xFF2196F3)),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
@@ -404,6 +460,7 @@ class _HomePageState extends State<HomePage> {
                   label: const Text('New Reminder'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xFF2196F3),
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(8),
                     ),
@@ -418,6 +475,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildDailyTipSection() {
+    // Get encouragement message based on selected mood, or default message
+    final tipMessage = _selectedMoodEmoji != null && _encouragementMessages.containsKey(_selectedMoodEmoji!)
+        ? _encouragementMessages[_selectedMoodEmoji!]!
+        : 'Slow progress is still progress. Keep breathing.';
+    
     return Container(
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
@@ -427,13 +489,13 @@ class _HomePageState extends State<HomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Row(
+          Row(
             children: [
-              Icon(Icons.push_pin, color: Colors.red, size: 20),
-              SizedBox(width: 8),
+              const Icon(Icons.push_pin, color: Colors.red, size: 20),
+              const SizedBox(width: 8),
               Text(
-                'Daily Tip',
-                style: TextStyle(
+                _selectedMoodEmoji != null ? 'Your Encouragement' : 'Daily Tip',
+                style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -442,9 +504,9 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           const SizedBox(height: 12),
-          const Text(
-            'Slow progress is still progress. Keep breathing.',
-            style: TextStyle(
+          Text(
+            tipMessage,
+            style: const TextStyle(
               fontSize: 14,
               color: Colors.white,
               fontStyle: FontStyle.italic,
@@ -511,38 +573,181 @@ class _HomePageState extends State<HomePage> {
   }
 
   Widget _buildNeedHelpSection() {
-    return Column(
+    return Container(
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [Color(0xFF2196F3), Color(0xFF6A5AE0)],
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ),
+        borderRadius: BorderRadius.circular(12),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.blue.withOpacity(0.15),
+            blurRadius: 12,
+            offset: const Offset(0, 6),
+          ),
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(12),
+          onTap: () {
+            setState(() {
+              _isGuideExpanded = !_isGuideExpanded;
+            });
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    const Icon(Icons.rocket_launch, color: Colors.white, size: 22),
+                    const SizedBox(width: 8),
+                    const Text(
+                      'CalmMind Guide',
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white,
+                      ),
+                    ),
+                    const Spacer(),
+                    AnimatedRotation(
+                      turns: _isGuideExpanded ? 0.5 : 0.0,
+                      duration: const Duration(milliseconds: 200),
+                      child: const Icon(Icons.expand_more, color: Colors.white),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 6),
+                const Text(
+                  'Quick tour of what you can do in the app',
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
+                  ),
+                ),
+                AnimatedCrossFade(
+                  firstChild: const SizedBox.shrink(),
+                  secondChild: Padding(
+                    padding: const EdgeInsets.only(top: 12),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _buildGuideRow(
+                          icon: Icons.mood,
+                          title: 'Mood Check',
+                          description:
+                              'Tap an emoji to log how you feel and get an encouragement tip that adapts to your mood.',
+                        ),
+                        const SizedBox(height: 10),
+                        _buildGuideRow(
+                          icon: Icons.notifications_active,
+                          title: 'Reminders',
+                          description:
+                              'Set reminders for self-care, sessions, or tasks. View the next one at a glance on Home.',
+                        ),
+                        const SizedBox(height: 10),
+                        _buildGuideRow(
+                          icon: Icons.message,
+                          title: 'Chat to Admin',
+                          description:
+                              'Reach out anytime. Send text or images, and recall messages if needed.',
+                        ),
+                        const SizedBox(height: 10),
+                        _buildGuideRow(
+                          icon: Icons.campaign,
+                          title: 'Notifications',
+                          description:
+                              'Stay updated with replies and reminders. Badge shows unread counts in real time.',
+                        ),
+                        const SizedBox(height: 10),
+                        _buildGuideRow(
+                          icon: Icons.spa,
+                          title: 'Resources',
+                          description:
+                              'Guided meditation, breathing exercises, micro-journals, and campus events in one place.',
+                        ),
+                        const SizedBox(height: 16),
+                        SizedBox(
+                          width: double.infinity,
+                          child: OutlinedButton.icon(
+                            onPressed: () {},
+                            style: OutlinedButton.styleFrom(
+                              side: const BorderSide(color: Colors.white),
+                              foregroundColor: Colors.white,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 12),
+                            ),
+                            icon: const Icon(Icons.lightbulb),
+                            label: const Text(
+                              'Need more help? Explore the app and tap icons to begin.',
+                              textAlign: TextAlign.center,
+                              style: TextStyle(fontSize: 13),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  crossFadeState:
+                      _isGuideExpanded ? CrossFadeState.showSecond : CrossFadeState.showFirst,
+                  duration: const Duration(milliseconds: 200),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildGuideRow({
+    required IconData icon,
+    required String title,
+    required String description,
+  }) {
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Row(
-          children: [
-            Icon(Icons.sos, color: Colors.red, size: 20),
-            SizedBox(width: 8),
-            Text(
-              'Need Help or Guidance?',
-              style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ],
+        Container(
+          width: 38,
+          height: 38,
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.15),
+            shape: BoxShape.circle,
+          ),
+          child: Icon(icon, color: Colors.white, size: 20),
         ),
-        const SizedBox(height: 12),
-        SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0xFF2196F3),
-              padding: const EdgeInsets.symmetric(vertical: 16),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700,
+                  fontSize: 14,
+                ),
               ),
-            ),
-            child: const Text(
-              'Submit Inquiry / Request Support',
-              style: TextStyle(color: Colors.white, fontSize: 14),
-            ),
+              const SizedBox(height: 4),
+              Text(
+                description,
+                style: const TextStyle(
+                  color: Colors.white70,
+                  fontSize: 13,
+                  height: 1.3,
+                ),
+              ),
+            ],
           ),
         ),
       ],

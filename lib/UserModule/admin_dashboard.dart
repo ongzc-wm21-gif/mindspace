@@ -193,6 +193,7 @@ class _AdminDashboardState extends State<AdminDashboard> with SingleTickerProvid
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(
               backgroundColor: primaryBlue,
+              foregroundColor: Colors.white,
             ),
             child: const Text('Logout'),
           ),
@@ -217,6 +218,7 @@ class _AdminDashboardState extends State<AdminDashboard> with SingleTickerProvid
         backgroundColor: primaryBlue,
         foregroundColor: Colors.white,
         elevation: 0,
+        automaticallyImplyLeading: false,
         bottom: TabBar(
           controller: _tabController,
           indicatorColor: Colors.white,

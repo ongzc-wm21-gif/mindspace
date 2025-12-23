@@ -138,6 +138,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             onPressed: () => Navigator.pop(context, true),
             style: ElevatedButton.styleFrom(
               backgroundColor: primaryBlue,
+              foregroundColor: Colors.white,
             ),
             child: const Text('Logout'),
           ),

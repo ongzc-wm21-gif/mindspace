@@ -5,8 +5,6 @@ import 'package:calmmind/UserModule/home_page.dart';
 import 'package:calmmind/database/supabase_service.dart';
 import 'package:calmmind/UserModule/user_model.dart';
 import 'package:calmmind/UserModule/admin_login_screen.dart';
-import 'package:calmmind/UserModule/promote_admin_screen.dart';
-import 'package:calmmind/UserModule/debug_database_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -122,6 +120,19 @@ class _LoginScreenState extends State<LoginScreen> {
             _error = 'User profile not found. Please contact support.';
             _isLoading = false;
           });
+          return;
+        }
+
+        // Block admins from using the user portal
+        final isAdmin = (user.roleType).toLowerCase() == 'admin';
+        if (isAdmin) {
+          await _supabase.auth.signOut();
+          if (mounted) {
+            setState(() {
+              _error = 'Only users can sign in to the user portal. Admins should use the Admin Portal.';
+              _isLoading = false;
+            });
+          }
           return;
         }
 
@@ -465,54 +476,20 @@ class _LoginScreenState extends State<LoginScreen> {
                 const SizedBox(height: 8),
                 // Admin Login Link
                 if (_isLogin)
-                  Column(
-                    children: [
-                      TextButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const AdminLoginScreen(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.admin_panel_settings, size: 18),
-                        label: const Text(
-                          'Admin Login',
-                          style: TextStyle(color: primaryBlue),
+                  TextButton.icon(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const AdminLoginScreen(),
                         ),
-                      ),
-                      TextButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const PromoteAdminScreen(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.person_add, size: 18),
-                        label: const Text(
-                          'Promote to Admin',
-                          style: TextStyle(color: Colors.orange),
-                        ),
-                      ),
-                      TextButton.icon(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const DebugDatabaseScreen(),
-                            ),
-                          );
-                        },
-                        icon: const Icon(Icons.bug_report, size: 18),
-                        label: const Text(
-                          'Debug Database',
-                          style: TextStyle(color: Colors.purple),
-                        ),
-                      ),
-                    ],
+                      );
+                    },
+                    icon: const Icon(Icons.admin_panel_settings, size: 18),
+                    label: const Text(
+                      'Admin Login',
+                      style: TextStyle(color: primaryBlue),
+                    ),
                   ),
               ],
             ),
