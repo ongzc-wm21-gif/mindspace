@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
-import 'package:calmmind/ResourceModule/models/meditation_model.dart';
+import 'package:mindspace/ResourceModule/models/meditation_model.dart';
 
 class PlayerScreen extends StatefulWidget {
   final MeditationModel meditation;

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:calmmind/UserModule/user_model.dart';
+import 'package:mindspace/UserModule/user_model.dart';
 import '../database/supabase_service.dart';
 import 'admin_user_edit_screen.dart';
 import 'login_screen.dart';

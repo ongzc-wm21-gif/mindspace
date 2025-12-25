@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:calmmind/database/supabase_service.dart';
-import 'package:calmmind/ChatModule/models/message_model.dart';
-import 'package:calmmind/UserModule/user_model.dart';
+import 'package:mindspace/database/supabase_service.dart';
+import 'package:mindspace/ChatModule/models/message_model.dart';
+import 'package:mindspace/UserModule/user_model.dart';
 
 class AdminChatDetailScreen extends StatefulWidget {
   final UserModel adminUser;

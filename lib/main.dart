@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:calmmind/UserModule/login_screen.dart';
-import 'package:calmmind/UserModule/reset_password_screen.dart';
-import 'package:calmmind/config/supabase_config.dart';
+import 'package:mindspace/UserModule/login_screen.dart';
+import 'package:mindspace/UserModule/reset_password_screen.dart';
+import 'package:mindspace/config/supabase_config.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,17 +22,17 @@ void main() async {
     print('❌ Supabase initialization error: $e');
   }
   
-  runApp(const CalmMindApp());
+  runApp(const MindSpaceApp());
 }
 
-class CalmMindApp extends StatefulWidget {
-  const CalmMindApp({super.key});
+class MindSpaceApp extends StatefulWidget {
+  const MindSpaceApp({super.key});
 
   @override
-  State<CalmMindApp> createState() => _CalmMindAppState();
+  State<MindSpaceApp> createState() => _MindSpaceAppState();
 }
 
-class _CalmMindAppState extends State<CalmMindApp> {
+class _MindSpaceAppState extends State<MindSpaceApp> {
   final GlobalKey<NavigatorState> _navigatorKey = GlobalKey<NavigatorState>();
 
   @override
@@ -63,7 +63,7 @@ class _CalmMindAppState extends State<CalmMindApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       navigatorKey: _navigatorKey,
-      title: 'CalmMind',
+      title: 'MindSpace',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
           seedColor: const Color(0xFF2196F3), // Blue color

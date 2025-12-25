@@ -7,12 +7,12 @@
 
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:calmmind/main.dart';
+import 'package:mindspace/main.dart';
 
 void main() {
   testWidgets('App loads login screen', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const CalmMindApp());
+    await tester.pumpWidget(const MindSpaceApp());
 
     // Verify that login screen is shown
     expect(find.text('Login'), findsWidgets);

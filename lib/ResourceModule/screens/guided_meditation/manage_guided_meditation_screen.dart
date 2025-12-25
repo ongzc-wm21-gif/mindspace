@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:calmmind/ResourceModule/screens/guided_meditation/add_edit_meditation_screen.dart';
-import 'package:calmmind/ResourceModule/models/meditation_model.dart';
-import 'package:calmmind/database/supabase_service.dart';
+import 'package:mindspace/ResourceModule/screens/guided_meditation/add_edit_meditation_screen.dart';
+import 'package:mindspace/ResourceModule/models/meditation_model.dart';
+import 'package:mindspace/database/supabase_service.dart';
 
 class ManageGuidedMeditationScreen extends StatefulWidget {
   const ManageGuidedMeditationScreen({super.key});

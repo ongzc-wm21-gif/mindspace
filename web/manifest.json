@@ -1,6 +1,6 @@
 {
-    "name": "calmmind",
-    "short_name": "calmmind",
+    "name": "mindspace",
+    "short_name": "mindspace",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

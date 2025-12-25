@@ -22,7 +22,7 @@ class EmailConfig {
   static const String smtpUsername = 'ongzc-wm21@student.tarc.edu.my';
   static const String smtpPassword = 'ctri lamm gibc nraq'; // Gmail App Password
   static const String fromEmail = 'ongzc-wm21@student.tarc.edu.my';
-  static const String fromName = 'CalmMind';
+  static const String fromName = 'MindSpace';
 
   // Email Settings
   static const bool useSSL = false;

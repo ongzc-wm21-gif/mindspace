@@ -5,8 +5,8 @@ import 'package:path/path.dart' as path;
 import 'package:path_provider/path_provider.dart';
 import 'package:video_player/video_player.dart';
 import 'package:audioplayers/audioplayers.dart';
-import 'package:calmmind/ResourceModule/models/meditation_model.dart';
-import 'package:calmmind/database/supabase_service.dart';
+import 'package:mindspace/ResourceModule/models/meditation_model.dart';
+import 'package:mindspace/database/supabase_service.dart';
 
 class AddEditMeditationScreen extends StatefulWidget {
   final MeditationModel? meditation;

@@ -183,7 +183,7 @@ class _HomePageState extends State<HomePage> {
               Icon(Icons.eco, color: Colors.green, size: 24),
               SizedBox(width: 8),
               Text(
-                'CalmMind',
+                'MindSpace',
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 20,
@@ -628,7 +628,7 @@ class _HomePageState extends State<HomePage> {
                     const Icon(Icons.rocket_launch, color: Colors.white, size: 22),
                     const SizedBox(width: 8),
                     const Text(
-                      'CalmMind Guide',
+                      'MindSpace Guide',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

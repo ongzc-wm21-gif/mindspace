@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:calmmind/database/supabase_service.dart';
-import 'package:calmmind/UserModule/user_model.dart';
+import 'package:mindspace/database/supabase_service.dart';
+import 'package:mindspace/UserModule/user_model.dart';
 
 class AdminUserEditScreen extends StatefulWidget {
   final UserModel user;

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:calmmind/ResourceModule/screens/campus_event/campus_event_screen.dart';
-import 'package:calmmind/ResourceModule/screens/breathing_exercise/breathing_exercise_screen.dart';
-import 'package:calmmind/ResourceModule/screens/guided_meditation/guided_meditation_screen.dart';
-import 'package:calmmind/ResourceModule/screens/micro_journal/micro_journal_screen.dart';
-import 'package:calmmind/UserModule/user_model.dart';
+import 'package:mindspace/ResourceModule/screens/campus_event/campus_event_screen.dart';
+import 'package:mindspace/ResourceModule/screens/breathing_exercise/breathing_exercise_screen.dart';
+import 'package:mindspace/ResourceModule/screens/guided_meditation/guided_meditation_screen.dart';
+import 'package:mindspace/ResourceModule/screens/micro_journal/micro_journal_screen.dart';
+import 'package:mindspace/UserModule/user_model.dart';
 
 class ResourceScreen extends StatelessWidget {
   final UserModel? user;

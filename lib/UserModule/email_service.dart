@@ -26,7 +26,7 @@ class EmailService {
       final message = Message()
         ..from = Address(EmailConfig.fromEmail, EmailConfig.fromName)
         ..recipients.add(toEmail)
-        ..subject = 'CalmMind - Password Reset OTP Code'
+        ..subject = 'MindSpace - Password Reset OTP Code'
         ..html = _buildOTPEmailHTML(username, otpCode)
         ..text = _buildOTPEmailText(username, otpCode);
 
@@ -92,7 +92,7 @@ class EmailService {
     <body>
       <div class="container">
         <div class="header">
-          <h1>CalmMind</h1>
+          <h1>MindSpace</h1>
         </div>
         <div class="content">
           <h2>Password Reset Request</h2>
@@ -101,7 +101,7 @@ class EmailService {
           <div class="otp-box">$otpCode</div>
           <p><strong>This code will expire in ${EmailConfig.otpExpiryMinutes} minutes.</strong></p>
           <p>If you didn't request this password reset, please ignore this email.</p>
-          <p>Stay calm and mindful,<br>The CalmMind Team</p>
+          <p>Stay calm and mindful,<br>The MindSpace Team</p>
         </div>
         <div class="footer">
           <p>This is an automated email. Please do not reply.</p>
@@ -115,7 +115,7 @@ class EmailService {
   // Build plain text email template
   static String _buildOTPEmailText(String username, String otpCode) {
     return '''
-CalmMind - Password Reset OTP Code
+MindSpace - Password Reset OTP Code
 
 Hello $username,
 
@@ -128,7 +128,7 @@ This code will expire in ${EmailConfig.otpExpiryMinutes} minutes.
 If you didn't request this password reset, please ignore this email.
 
 Stay calm and mindful,
-The CalmMind Team
+The MindSpace Team
 
 ---
 This is an automated email. Please do not reply.
@@ -141,8 +141,8 @@ This is an automated email. Please do not reply.
       final message = Message()
         ..from = Address(EmailConfig.fromEmail, EmailConfig.fromName)
         ..recipients.add(EmailConfig.fromEmail) // Send test email to yourself
-        ..subject = 'CalmMind - Email Test'
-        ..text = 'This is a test email from CalmMind. If you receive this, your email configuration is working correctly.';
+        ..subject = 'MindSpace - Email Test'
+        ..text = 'This is a test email from MindSpace. If you receive this, your email configuration is working correctly.';
 
       final sendReport = await send(message, _smtpServer);
       return sendReport.toString().contains('MessageId');

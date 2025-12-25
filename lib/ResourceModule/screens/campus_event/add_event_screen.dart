@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:calmmind/ResourceModule/models/event_model.dart';
-import 'package:calmmind/database/supabase_service.dart';
+import 'package:mindspace/ResourceModule/models/event_model.dart';
+import 'package:mindspace/database/supabase_service.dart';
 
 class AddEventScreen extends StatefulWidget {
   final EventModel? event;

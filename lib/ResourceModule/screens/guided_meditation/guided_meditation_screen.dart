@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:calmmind/ResourceModule/screens/guided_meditation/manage_guided_meditation_screen.dart';
-import 'package:calmmind/ResourceModule/screens/guided_meditation/player_screen.dart';
-import 'package:calmmind/ResourceModule/models/meditation_model.dart';
-import 'package:calmmind/database/supabase_service.dart';
+import 'package:mindspace/ResourceModule/screens/guided_meditation/manage_guided_meditation_screen.dart';
+import 'package:mindspace/ResourceModule/screens/guided_meditation/player_screen.dart';
+import 'package:mindspace/ResourceModule/models/meditation_model.dart';
+import 'package:mindspace/database/supabase_service.dart';
 
 class GuidedMeditationScreen extends StatefulWidget {
   final bool isAdmin;

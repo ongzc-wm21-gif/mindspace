@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:calmmind/ResourceModule/screens/micro_journal/journal_history_screen.dart';
-import 'package:calmmind/ResourceModule/models/journal_entry_model.dart';
-import 'package:calmmind/database/supabase_service.dart';
+import 'package:mindspace/ResourceModule/screens/micro_journal/journal_history_screen.dart';
+import 'package:mindspace/ResourceModule/models/journal_entry_model.dart';
+import 'package:mindspace/database/supabase_service.dart';
 
 class MicroJournalScreen extends StatefulWidget {
   const MicroJournalScreen({super.key});

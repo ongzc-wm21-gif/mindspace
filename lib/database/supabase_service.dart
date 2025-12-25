@@ -1,15 +1,15 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:calmmind/UserModule/user_model.dart';
-import 'package:calmmind/UserModule/otp_model.dart';
-import 'package:calmmind/MoodTrackingModule/models/mood_model.dart';
-import 'package:calmmind/MoodTrackingModule/models/habit_model.dart';
-import 'package:calmmind/MoodTrackingModule/models/phq9_model.dart';
-import 'package:calmmind/MoodTrackingModule/models/daily_record_model.dart';
-import 'package:calmmind/ResourceModule/models/event_model.dart';
-import 'package:calmmind/ResourceModule/models/meditation_model.dart';
-import 'package:calmmind/ResourceModule/models/journal_entry_model.dart';
-import 'package:calmmind/ChatModule/models/message_model.dart';
+import 'package:mindspace/UserModule/user_model.dart';
+import 'package:mindspace/UserModule/otp_model.dart';
+import 'package:mindspace/MoodTrackingModule/models/mood_model.dart';
+import 'package:mindspace/MoodTrackingModule/models/habit_model.dart';
+import 'package:mindspace/MoodTrackingModule/models/phq9_model.dart';
+import 'package:mindspace/MoodTrackingModule/models/daily_record_model.dart';
+import 'package:mindspace/ResourceModule/models/event_model.dart';
+import 'package:mindspace/ResourceModule/models/meditation_model.dart';
+import 'package:mindspace/ResourceModule/models/journal_entry_model.dart';
+import 'package:mindspace/ChatModule/models/message_model.dart';
 
 /// Supabase Service - Uses Supabase Authentication
 /// All database operations now use auth.uid() for user identification

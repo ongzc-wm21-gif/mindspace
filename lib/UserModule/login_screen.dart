@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:calmmind/UserModule/forgot_password_screen.dart';
-import 'package:calmmind/UserModule/home_page.dart';
-import 'package:calmmind/database/supabase_service.dart';
-import 'package:calmmind/UserModule/user_model.dart';
-import 'package:calmmind/UserModule/admin_login_screen.dart';
+import 'package:mindspace/UserModule/forgot_password_screen.dart';
+import 'package:mindspace/UserModule/home_page.dart';
+import 'package:mindspace/database/supabase_service.dart';
+import 'package:mindspace/UserModule/user_model.dart';
+import 'package:mindspace/UserModule/admin_login_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});

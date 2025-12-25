@@ -40,7 +40,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
       // Use Supabase Auth's built-in password reset
       await _supabase.auth.resetPasswordForEmail(
         email,
-        redirectTo: 'calmmind://reset-password', // Deep link for password reset
+        redirectTo: 'mindspace://reset-password', // Deep link for password reset
       );
 
       if (mounted) {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:calmmind/database/supabase_service.dart';
-import 'package:calmmind/RemindersModule/models/reminder_model.dart';
-import 'package:calmmind/RemindersModule/screens/add_edit_reminder_screen.dart';
+import 'package:mindspace/database/supabase_service.dart';
+import 'package:mindspace/RemindersModule/models/reminder_model.dart';
+import 'package:mindspace/RemindersModule/screens/add_edit_reminder_screen.dart';
 import 'package:intl/intl.dart';
 
 class RemindersListScreen extends StatefulWidget {

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:calmmind/database/supabase_service.dart';
-import 'package:calmmind/NotificationModule/models/notification_model.dart';
-import 'package:calmmind/ChatModule/screens/user_chat_screen.dart';
-import 'package:calmmind/UserModule/user_model.dart';
+import 'package:mindspace/database/supabase_service.dart';
+import 'package:mindspace/NotificationModule/models/notification_model.dart';
+import 'package:mindspace/ChatModule/screens/user_chat_screen.dart';
+import 'package:mindspace/UserModule/user_model.dart';
 
 class NotificationsScreen extends StatefulWidget {
   final UserModel user;
